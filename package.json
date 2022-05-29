@@ -1,0 +1,19 @@
+{
+  "name": "research-project-management-tool",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pasindurukshan/Research-project-management-tool.git"
+  },
+  "author": "Fernando, Hewage, Bandara, Wijerathna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pasindurukshan/Research-project-management-tool/issues"
+  },
+  "homepage": "https://github.com/pasindurukshan/Research-project-management-tool#readme"
+}
