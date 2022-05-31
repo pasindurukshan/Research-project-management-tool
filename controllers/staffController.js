@@ -5,6 +5,8 @@ const Staff = require('../schemas/staff-schema')
 
 //register staff member
 const registerStaff = asyncHandler(async (req, res) => {
+    console.log('Add a staff member');
+    
     const { name, staffId, email, password, role } = req.body
 
     const staffExists = await Staff.findOne({email})
