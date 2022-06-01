@@ -65,6 +65,20 @@ export default class EvaluateTopicList extends Component {
       });
   }
 
+  deleteEvaluate(id) {
+    if (window.confirm("Are you sure?")) {
+      axios
+        .delete("http://localhost:4000/api/del/topic/" + id)
+        .then((response) => {
+          console.log(response.data);
+        });
+
+      this.setState({
+        Topic: this.state.Topic.filter((el) => el._id !== id),
+      });
+    }
+  }
+
   TopicList() {
     return this.state.Topic.map((currentTopic) => {
       return <Topic Topic={currentTopic} key={currentTopic._id} />;
@@ -93,8 +107,8 @@ export default class EvaluateTopicList extends Component {
         <table className="table table-bordered table-white">
           <thead className="thead-dark" style={{ fontWeight: "bold" }}>
             <tr>
-              <th>Topic Name </th>
-              <th> Evaluate </th>
+              <th>Topic </th>
+              <th> Action </th>
             </tr>{" "}
           </thead>
           <tbody style={{ fontWeight: "bold" }}>
@@ -104,7 +118,7 @@ export default class EvaluateTopicList extends Component {
                 <td> {props.name} </td>
 
                 <td>
-                  <Link to={"/addEva/" + props._id}>
+                  <Link to={`/addEva/${props.name}`}>
                     <Button data-inline="true" variant="dark">
                       Evaluate Topic
                     </Button>
@@ -130,10 +144,10 @@ export default class EvaluateTopicList extends Component {
         <table className="table table-bordered table-white">
           <thead className="thead-dark" style={{ fontWeight: "bold" }}>
             <tr>
-              <th> Name </th>
+              <th> Topic </th>
               <th> Reason </th>
-              <th> Date </th>
               <th> Status </th>
+              <th> Date </th>
               <th> Action </th>
             </tr>{" "}
           </thead>
@@ -143,20 +157,25 @@ export default class EvaluateTopicList extends Component {
               <tr key={props.id}>
                 <td> {props.name} </td>
                 <td> {props.reason} </td>
-                <td> {props.date} </td>
                 <td> {props.status} </td>
+                <td> {props.date} </td>
                 <td>
-                  <Link to={"/" + props._id}>
+                  <Link to={"/editEva/" + props._id}>
                     <Button data-inline="true" variant="dark">
                       Update
                     </Button>
                   </Link>
 
-                  <Link to={"/" + props._id}>
+                  <a
+                    href=""
+                    onClick={() => {
+                      this.deleteEvaluate(props._id);
+                    }}
+                  >
                     <Button data-inline="true" variant="dark">
                       Delete
                     </Button>
-                  </Link>
+                  </a>
                 </td>
               </tr>
             ))}

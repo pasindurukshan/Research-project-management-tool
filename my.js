@@ -4,32 +4,40 @@ import "react-datepicker/dist/react-datepicker.css";
 import swal from "@sweetalert/with-react";
 import DatePicker from "react-datepicker";
 
-export default class AddEvaluate extends Component {
+export default class EditSupplier extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeName = this.onChangeName.bind(this);
-    this.onChangeReason = this.onChangeReason.bind(this);
-    this.onChangeStatus = this.onChangeStatus.bind(this);
+    this.onChangeSupID = this.onChangeSupID.bind(this);
+    this.onChangeSupname = this.onChangeSupname.bind(this);
+    this.onChangeAmount = this.onChangeAmount.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangeContactno = this.onChangeContactno.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      name: "",
-      reason: "",
-      status: "",
-      date: "",
+      SupID: "",
+      Supname: "",
+      Amount: "",
+      Date: "",
+      Contactno: "",
+      Email: "",
+      Supplier: [],
     };
   }
 
   componentDidMount() {
     axios
-      .get("http://localhost:4000/api/get/topics/" + this.props.match.params.id)
+      .get("http://localhost:5000/Supplier/" + this.props.match.params.id)
       .then((response) => {
         this.setState({
-          name: response.data.name,
-          reason: response.data.reason,
-          status: response.data.status,
-          date: response.data.date,
+          SupID: response.data.SupID,
+          Supname: response.data.Supname,
+          Amount: response.data.Amount,
+          Date: response.data.Date,
+          Contactno: response.data.Contactno,
+          Email: response.data.Email,
         });
       })
       .catch(function (error) {
@@ -37,11 +45,11 @@ export default class AddEvaluate extends Component {
       });
 
     axios
-      .get("http://localhost:4000/api/get/topics/")
+      .get("http://localhost:5000/Supplier/")
       .then((response) => {
         if (response.data.length > 0) {
           this.setState({
-            Delivery: response.data.map((Topic) => Topic.DPname),
+            Delivery: response.data.map((Supplier) => Supplier.DPname),
           });
         }
       })
@@ -50,44 +58,92 @@ export default class AddEvaluate extends Component {
       });
   }
 
-  onChangeName(e) {
+  //set the SupID
+
+  onChangeSupID(e) {
     this.setState({
-      name: e.target.value,
+      SupID: e.target.value,
     });
   }
-  onChangeReason(e) {
+
+  //set the Supname
+
+  onChangeSupname(e) {
     this.setState({
-      reason: e.target.value,
+      Supname: e.target.value,
     });
   }
-  onChangeStatus(e) {
+
+  //set Amount
+  onChangeAmount(e) {
     this.setState({
-      status: e.target.value,
+      Amount: e.target.value,
     });
   }
+
+  //set Date
+
   onChangeDate(e) {
     this.setState({
-      date: e.target.value,
+      Date: e.target.value,
+    });
+  }
+
+  //set Contactno
+  onChangeContactno(e) {
+    this.setState({
+      Contactno: e.target.value,
+    });
+  }
+
+  //set Contactno
+  onChangeEmail(e) {
+    this.setState({
+      Email: e.target.value,
     });
   }
 
   onSubmit(e) {
     e.preventDefault();
 
-    const Topic = {
-      name: this.state.name,
-      reason: this.state.reason,
-      status: this.state.status,
-      date: this.state.date,
-    };
-    console.log(Topic);
+    const { Contactno, Amount } = this.state;
 
-    axios
-      .post(
-        "http://localhost:4000/api/evt/topic/" + this.props.match.params.id,
-        Topic
-      )
-      .then((res) => console.log(res.data));
+    const cup = /^[0-9\b]+$/;
+    if (!cup.test(String(Contactno)) || Contactno.length != 10) {
+      swal(
+        "Invalid Contact no !",
+        "Contact no Should be number & length shuld be 10!",
+        "error"
+      );
+    } else if (!cup.test(String(Amount))) {
+      swal("Invalid  Amount!", " Amount Should be number!", "error");
+    } else {
+      const Supplier = {
+        SupID: this.state.SupID,
+        Supname: this.state.Supname,
+        Amount: this.state.Amount,
+        Date: this.state.Date,
+        Contactno: this.state.Contactno,
+        Email: this.state.Email,
+      };
+      console.log(Supplier);
+
+      axios
+        .post(
+          "http://localhost:5000/Supplier/update/" + this.props.match.params.id,
+          Supplier
+        )
+        .then((res) => console.log(res.data));
+
+      swal({
+        title: "Done!",
+        text: "Edit Successfully!",
+        icon: "success",
+        button: "Okay!",
+      }).then((value) => {
+        swal((window.location = "/Supplier/"));
+      });
+    }
   }
 
   render() {
@@ -96,11 +152,7 @@ export default class AddEvaluate extends Component {
         <div class="row ">
           <div class="col-6">
             <br />
-            <img
-              src="https://thumbs.dreamstime.com/b/time-to-evaluate-blackboard-48391240.jpg"
-              width="60%"
-              height="40%"
-            />
+            <img src="/images/cupcake_logo.gif" width="60%" height="40%" />
           </div>{" "}
           <div class="col-6">
             <div div class="myformstyle">
@@ -116,55 +168,77 @@ export default class AddEvaluate extends Component {
                 <br></br>
                 <form onSubmit={this.onSubmit}>
                   <div className="form-group">
-                    <label>Name </label>
+                    <label>Supplier ID: </label>
                     <input
                       type="text"
-                      placeholder="Name"
+                      placeholder="Supplier ID"
                       required
                       className="form-control"
-                      value={this.state.name}
-                      onChange={this.onChangeName}
+                      value={this.state.SupID}
+                      onChange={this.onChangeSupID}
                     />
                   </div>{" "}
                   <div className="form-group">
-                    <label> Reason </label>
+                    <label> Supplier Name: </label>
                     <input
                       type="text"
-                      placeholder="Reason"
+                      placeholder="Supplier Name"
                       required
                       className="form-control"
-                      value={this.state.reason}
-                      onChange={this.onChangeReason}
+                      value={this.state.Supname}
+                      onChange={this.onChangeSupname}
                     />
                   </div>
                   <div className="form-group">
-                    <label> Status </label>
+                    <label> Amount: </label>
 
                     <input
                       type="text"
-                      placeholder="Status"
+                      placeholder="Amount"
                       required
                       className="form-control"
-                      value={this.state.status}
-                      onChange={this.onChangeStatus}
+                      value={this.state.Amount}
+                      onChange={this.onChangeAmount}
                     />
                   </div>
                   <div className="form-group">
-                    <label> Date </label>
+                    <label> Bill Date: </label>
 
                     <input
                       type="date"
                       placeholder="Date"
                       required
                       className="form-control"
-                      value={this.state.date}
+                      value={this.state.Date}
                       onChange={this.onChangeDate}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label> Contact No: </label>
+                    <input
+                      type="text"
+                      placeholder="Contact No"
+                      required
+                      className="form-control"
+                      value={this.state.Contactno}
+                      onChange={this.onChangeContactno}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label> Email: </label>
+                    <input
+                      type="Email"
+                      placeholder="Email"
+                      required
+                      className="form-control"
+                      value={this.state.Email}
+                      onChange={this.onChangeEmail}
                     />
                   </div>
                   <div className="form-group">
                     <input
                       type="submit"
-                      value="Add "
+                      value="Update "
                       className="btn btn-primary"
                     />
                   </div>{" "}

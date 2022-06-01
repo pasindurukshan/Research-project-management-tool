@@ -6,53 +6,48 @@ import swal from "@sweetalert/with-react";
 import DatePicker from "react-datepicker";
 import "./main.css";
 
-const Test = (props) => (
-  <tr>
-    <td> {props.Test.name} </td>
-  </tr>
-);
-
-export default class AddEvaluate extends Component {
+export default class EditEvaluate extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeName = this.onChangeName.bind(this);
     this.onChangeReason = this.onChangeReason.bind(this);
     this.onChangeStatus = this.onChangeStatus.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      name: "",
-      reason: "",
-      status: "",
-      date: "",
+      Topic: [],
     };
   }
 
   componentDidMount() {
     axios
-      .get("http://localhost:4000/api/gettest/tests/")
+      .get("http://localhost:4000/api/get/topics" + this.props.match.params.id)
       .then((response) => {
         this.setState({
           name: response.data.name,
+          reason: response.data.reason,
+          status: response.data.status,
+          date: response.data.date,
         });
       })
       .catch(function (error) {
         console.log(error);
       });
+    axios
+      .get("http://localhost:4000/api/get/topics")
+      .then((response) => {
+        if (response.data.length > 0) {
+          this.setState({
+            Delivery: response.data.map((Topic) => Topic.DPname),
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
-  TestList() {
-    return this.state.Test.map((currentTest) => {
-      return <Test Test={currentTest} key={currentTest._id} />;
-    });
-  }
-  onChangeName(e) {
-    this.setState({
-      name: e.target.value,
-    });
-  }
   onChangeReason(e) {
     this.setState({
       reason: e.target.value,
@@ -73,7 +68,6 @@ export default class AddEvaluate extends Component {
     e.preventDefault();
 
     const Topic = {
-      name: this.props.match.params.name,
       reason: this.state.reason,
       status: this.state.status,
       date: this.state.date,
@@ -81,7 +75,10 @@ export default class AddEvaluate extends Component {
     console.log(Topic);
 
     axios
-      .post("http://localhost:4000/api/evt/topic/", Topic)
+      .put(
+        "http://localhost:4000/api/put/topic/" + this.props.match.params.id,
+        Topic
+      )
       .then((res) => console.log(res.data));
 
     swal({
@@ -95,18 +92,16 @@ export default class AddEvaluate extends Component {
   }
 
   render() {
-    const Name = this.props.match.params.name;
-    console.log(Name);
     return (
       <div>
-        <div className="row">
+        <div className="row ">
           <div className="col-12">
             <div className="myformstyle">
               <div className="card-body">
                 <div className="col-md-8 mt-4 mx-auto"> </div>
                 <h3 className="text-center">
-                  <font size="6">Evaluate</font>
-                </h3>
+                  <font size="6">Edit Evaluate</font>
+                </h3>{" "}
                 <br></br>
                 <br></br>
                 <form className="col-lg-6 offset-lg-3" onSubmit={this.onSubmit}>
@@ -115,9 +110,8 @@ export default class AddEvaluate extends Component {
                     <input
                       type="text"
                       placeholder="Name"
-                      required
                       className="form-control"
-                      value={Name}
+                      value={this.state.name}
                       disabled
                     />
                   </div>{" "}
@@ -128,6 +122,7 @@ export default class AddEvaluate extends Component {
                       placeholder="Reason"
                       required
                       className="form-control"
+                      value={this.state.reason}
                       onChange={this.onChangeReason}
                     />
                   </div>
@@ -135,14 +130,6 @@ export default class AddEvaluate extends Component {
                     <label style={{ fontWeight: "bold" }}> Status </label>
                     <br />
 
-                    {/* <input
-                      type="select"
-                      placeholder="Status"
-                      required
-                      className="form-control"
-                      value={this.state.status}
-                      onChange={this.onChangeStatus}
-                    /> */}
                     <select
                       class="form-select"
                       style={{ width: "200px", height: "40px" }}
@@ -161,13 +148,14 @@ export default class AddEvaluate extends Component {
                       placeholder="Date"
                       required
                       className="form-control"
+                      value={this.state.date}
                       onChange={this.onChangeDate}
                     />
                   </div>
                   <div className="form-group">
                     <input
                       type="submit"
-                      value="Add "
+                      value="Edit "
                       className="btn btn-primary"
                     />
                   </div>

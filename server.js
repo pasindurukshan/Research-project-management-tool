@@ -4,9 +4,10 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 
 const EvaluateTopicRoutes = require("./routes/evaluate.js");
-const EvaluatePresentationRoutes = require("./routes/evaluate.js");
-
 const GetEvaluateTopicsRoutes = require("./routes/evaluate.js");
+const updateEvaluateTopic = require("./routes/evaluate.js");
+const DelEvaluateTopicsRoutes = require("./routes/evaluate.js");
+const EvaluatePresentationRoutes = require("./routes/evaluate.js");
 
 const AddTestRoutes = require("./routes/evaluate.js");
 const GetTestsRoutes = require("./routes/evaluate.js");
@@ -20,8 +21,11 @@ app.use(express.static("public")); //This lines means the static data like css, 
 
 app.use(express.json());
 app.use("/api/evt", EvaluateTopicRoutes);
-app.use("/api/evp", EvaluatePresentationRoutes);
 app.use("/api/get", GetEvaluateTopicsRoutes);
+app.use("/api/put", updateEvaluateTopic);
+app.use("/api/del", DelEvaluateTopicsRoutes);
+app.use("/api/evp", EvaluatePresentationRoutes);
+
 app.use("/api/addtest", AddTestRoutes);
 app.use("/api/gettest", GetTestsRoutes);
 
