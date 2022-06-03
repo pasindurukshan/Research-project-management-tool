@@ -2,14 +2,12 @@ const mongoose = require("mongoose");
 
 const evaluatePresentationSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  reason: { type: String, required: true },
-  status: { type: String, required: true },
+  stp1: { type: Number, required: true },
+  stp2: { type: Number, required: true },
+  stp3: { type: Number, required: true },
+  stp4: { type: Number, required: true },
+  total: { type: Number },
   date: { type: String, required: true },
-  rating: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
 });
 
 module.exports = mongoose.model(

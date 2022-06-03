@@ -14,6 +14,17 @@ const evaluateTopic = asyncHandler(async (req, res) => {
   });
 });
 
+const getEvaluateTopicById = asyncHandler(async (req, res) => {
+  const topic = await Topic.findById(req.params.id);
+
+  if (topic) {
+    res.json(topic);
+  } else {
+    res.status(404);
+    throw new Error("Topic not found");
+  }
+});
+
 const getEvaluateTopics = asyncHandler(async (req, res) => {
   const topics = await Topic.find({});
   res.json(topics);
@@ -53,3 +64,4 @@ exports.evaluateTopic = evaluateTopic;
 exports.getEvaluateTopics = getEvaluateTopics;
 exports.updateEvaluateTopic = updateEvaluateTopic;
 exports.deleteEvaluateTopic = deleteEvaluateTopic;
+exports.getEvaluateTopicById = getEvaluateTopicById;

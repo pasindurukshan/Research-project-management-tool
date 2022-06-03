@@ -5,12 +5,17 @@ const mongoose = require("mongoose");
 
 const EvaluateTopicRoutes = require("./routes/evaluate.js");
 const GetEvaluateTopicsRoutes = require("./routes/evaluate.js");
-const updateEvaluateTopic = require("./routes/evaluate.js");
+const GetEvaluateTopicByIdRoutes = require("./routes/evaluate.js");
+const UpdateEvaluateTopic = require("./routes/evaluate.js");
 const DelEvaluateTopicsRoutes = require("./routes/evaluate.js");
 const EvaluatePresentationRoutes = require("./routes/evaluate.js");
+const GetEvaluatePresentationRoutes = require("./routes/evaluate.js");
+const GetEvaluatePresentationByIdRoutes = require("./routes/evaluate.js");
+const UpdateEvaluatePresentationRoutes = require("./routes/evaluate.js");
 
 const AddTestRoutes = require("./routes/evaluate.js");
 const GetTestsRoutes = require("./routes/evaluate.js");
+const DelTestsRoutes = require("./routes/evaluate.js");
 
 const app = express();
 
@@ -20,14 +25,19 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.static("public")); //This lines means the static data like css, images... are in the public directory
 
 app.use(express.json());
-app.use("/api/evt", EvaluateTopicRoutes);
+app.use("/api/add", EvaluateTopicRoutes);
 app.use("/api/get", GetEvaluateTopicsRoutes);
-app.use("/api/put", updateEvaluateTopic);
+app.use("/api/get", GetEvaluateTopicByIdRoutes);
+app.use("/api/put", UpdateEvaluateTopic);
 app.use("/api/del", DelEvaluateTopicsRoutes);
-app.use("/api/evp", EvaluatePresentationRoutes);
+app.use("/api/add", EvaluatePresentationRoutes);
+app.use("/api/get", GetEvaluatePresentationRoutes);
+app.use("/api/get", GetEvaluatePresentationByIdRoutes);
+app.use("/api/put", UpdateEvaluatePresentationRoutes);
 
 app.use("/api/addtest", AddTestRoutes);
 app.use("/api/gettest", GetTestsRoutes);
+app.use("/api/deltest", DelTestsRoutes);
 
 const connectionString = process.env["MONGO_DB"];
 

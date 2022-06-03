@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 
-const Topic = (props) => (
+const Presentation = (props) => (
   <tr>
-    <td> {props.Topic.reason} </td>
-    <td> {props.Topic.date} </td>
-    <td> {props.Topic.status} </td>
+    <td> {props.Presentation.stp1} </td>
+    <td> {props.Presentation.stp2} </td>
+    <td> {props.Presentation.stp3} </td>
+    <td> {props.Presentation.stp4} </td>
+    <td> {props.Presentation.total} </td>
+    <td> {props.Presentation.date} </td>
   </tr>
 );
 const Test = (props) => (
@@ -15,21 +18,21 @@ const Test = (props) => (
     <td> {props.Test.name} </td>
   </tr>
 );
-export default class EvaluateTopicList extends Component {
+export default class EvaluatePresentationList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      Topic: [],
+      Presentation: [],
       Test: [],
     };
   }
 
   componentDidMount() {
     axios
-      .get("http://localhost:4000/api/get/topics/")
+      .get("http://localhost:4000/api/get/presentations/")
       .then((response) => {
-        this.setState({ Topic: response.data });
+        this.setState({ Presentation: response.data });
       })
       .catch((error) => {
         console.log(error);
@@ -47,9 +50,9 @@ export default class EvaluateTopicList extends Component {
 
   getPosts() {
     axios
-      .get("http://localhost:4000/api/get/topics/")
+      .get("http://localhost:4000/api/get/presentations/")
       .then((response) => {
-        this.setState({ Topic: response.data });
+        this.setState({ Presentation: response.data });
       })
       .catch((error) => {
         console.log(error);
@@ -65,37 +68,14 @@ export default class EvaluateTopicList extends Component {
       });
   }
 
-  deleteEvaluate(id) {
-    if (window.confirm("Are you sure?")) {
-      axios
-        .delete("http://localhost:4000/api/del/topic/" + id)
-        .then((response) => {
-          console.log(response.data);
-        });
-
-      this.setState({
-        Topic: this.state.Topic.filter((el) => el._id !== id),
-      });
-    }
-  }
-
-  deleteTest(id) {
-    if (window.confirm("Are you sure?")) {
-      axios
-        .delete("http://localhost:4000/api/deltest/test/" + id)
-        .then((response) => {
-          console.log(response.data);
-        });
-
-      this.setState({
-        Test: this.state.Test.filter((el) => el._id !== id),
-      });
-    }
-  }
-
-  TopicList() {
-    return this.state.Topic.map((currentTopic) => {
-      return <Topic Topic={currentTopic} key={currentTopic._id} />;
+  PresentationList() {
+    return this.state.Presentation.map((currentPresentation) => {
+      return (
+        <Presentation
+          Presentation={currentPresentation}
+          key={currentPresentation._id}
+        />
+      );
     });
   }
 
@@ -111,7 +91,7 @@ export default class EvaluateTopicList extends Component {
         <div></div> <br />
         <div className="row">
           <div className="col-9 mt-1 mb-1">
-            <h3> All Topics </h3>
+            <h3> All Presentation </h3>
           </div>
           <br></br>
 
@@ -121,27 +101,21 @@ export default class EvaluateTopicList extends Component {
         <table className="table table-bordered table-white">
           <thead className="thead-dark" style={{ fontWeight: "bold" }}>
             <tr>
-              <th>Topic </th>
+              <th>Presentation Topic </th>
               <th> Action </th>
-            </tr>
+            </tr>{" "}
           </thead>
           <tbody style={{ fontWeight: "bold" }}>
+            {" "}
             {this.state.Test.map((props) => (
               <tr key={props.id}>
                 <td> {props.name} </td>
 
                 <td>
-                  <Link to={`/addEva/${props.name}`}>
-                    <a
-                      href=""
-                      onClick={() => {
-                        this.deleteTest(props._id);
-                      }}
-                    >
-                      <Button data-inline="true" variant="dark">
-                        Evaluate Topic
-                      </Button>
-                    </a>
+                  <Link to={`/addEvaPre/${props.name}`}>
+                    <Button data-inline="true" variant="dark">
+                      Evaluate
+                    </Button>
                   </Link>
                 </td>
               </tr>
@@ -154,7 +128,7 @@ export default class EvaluateTopicList extends Component {
         <div></div> <br />
         <div className="row">
           <div className="col-9 mt-1 mb-1">
-            <h3> All Topic Evaluated Topics </h3>
+            <h3> All Evaluated Presentations </h3>
           </div>
           <br></br>
 
@@ -164,36 +138,33 @@ export default class EvaluateTopicList extends Component {
         <table className="table table-bordered table-white">
           <thead className="thead-dark" style={{ fontWeight: "bold" }}>
             <tr>
-              <th> Topic </th>
-              <th> Reason </th>
-              <th> Status </th>
-              <th> Evaluated Date </th>
+              <th>Presentation Topic </th>
+              <th> Step 1 </th>
+              <th> Step 2 </th>
+              <th> Step 3 </th>
+              <th> Step 4 </th>
+              <th> Total Marks </th>
+              <th> Date </th>
               <th> Action </th>
-            </tr>
+            </tr>{" "}
           </thead>
           <tbody style={{ fontWeight: "bold" }}>
-            {this.state.Topic.map((props) => (
+            {" "}
+            {this.state.Presentation.map((props) => (
               <tr key={props.id}>
                 <td> {props.name} </td>
-                <td> {props.reason} </td>
-                <td> {props.status} </td>
+                <td> {props.stp1} </td>
+                <td> {props.stp2} </td>
+                <td> {props.stp3} </td>
+                <td> {props.stp4} </td>
+                <td>{props.total}</td>
                 <td> {props.date} </td>
                 <td>
-                  <Link to={"/editEva/" + props._id}>
+                  <Link to={"/editEvaPre/" + props._id}>
                     <Button data-inline="true" variant="dark">
                       Update
                     </Button>
-                  </Link>{" "}
-                  <a
-                    href=""
-                    onClick={() => {
-                      this.deleteEvaluate(props._id);
-                    }}
-                  >
-                    <Button data-inline="true" variant="dark">
-                      Delete
-                    </Button>
-                  </a>
+                  </Link>
                 </td>
               </tr>
             ))}

@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import swal from "@sweetalert/with-react";
-import DatePicker from "react-datepicker";
+
 import "./main.css";
 
 export default class EditEvaluate extends Component {
@@ -22,7 +22,7 @@ export default class EditEvaluate extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:4000/api/get/topics" + this.props.match.params.id)
+      .get("http://localhost:4000/api/get/topic/" + this.props.match.params.id)
       .then((response) => {
         this.setState({
           name: response.data.name,
@@ -134,10 +134,13 @@ export default class EditEvaluate extends Component {
                       class="form-select"
                       style={{ width: "200px", height: "40px" }}
                       onChange={this.onChangeStatus}
+                      value={this.state.status}
                     >
                       <option selected>Add Status</option>
+                      <option value="Poor">Poor</option>
+                      <option value="Fair">Fair</option>
                       <option value="Good">Good</option>
-                      <option value="Bad">Bad</option>
+                      <option value="Excellent ">Excellent</option>
                     </select>
                   </div>
                   <div className="form-group">

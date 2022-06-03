@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import swal from "@sweetalert/with-react";
-import DatePicker from "react-datepicker";
+
 import "./main.css";
 
 const Test = (props) => (
@@ -81,7 +81,7 @@ export default class AddEvaluate extends Component {
     console.log(Topic);
 
     axios
-      .post("http://localhost:4000/api/evt/topic/", Topic)
+      .post("http://localhost:4000/api/add/topic/", Topic)
       .then((res) => console.log(res.data));
 
     swal({
@@ -134,27 +134,22 @@ export default class AddEvaluate extends Component {
                   <div className="form-group">
                     <label style={{ fontWeight: "bold" }}> Status </label>
                     <br />
-
-                    {/* <input
-                      type="select"
-                      placeholder="Status"
-                      required
-                      className="form-control"
-                      value={this.state.status}
-                      onChange={this.onChangeStatus}
-                    /> */}
                     <select
                       class="form-select"
                       style={{ width: "200px", height: "40px" }}
                       onChange={this.onChangeStatus}
                     >
                       <option selected>Add Status</option>
+                      <option value="Poor">Poor</option>
+                      <option value="Fair">Fair</option>
                       <option value="Good">Good</option>
-                      <option value="Bad">Bad</option>
+                      <option value="Excellent ">Excellent</option>
                     </select>
                   </div>
                   <div className="form-group">
-                    <label style={{ fontWeight: "bold" }}> Date </label>
+                    <label style={{ fontWeight: "bold" }}>
+                      Evaluated Date{" "}
+                    </label>
 
                     <input
                       type="date"
