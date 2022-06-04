@@ -76,7 +76,7 @@ export default class studentDashboard extends Component {
                 <div id="page-content-wrapper">
                         <div className="container bg-info rounded-4">
                             <br />
-                            <h4>Student Group Details</h4>
+                            <h4 style={{ color: "white" }}>Student Group Details</h4>
                             <hr />
                             <div class="p-3 mb-2 bg-primary text-white rounded-3">
                                 <table className=" p-3 mb-2 table table-bordered border-info table table-info table-striped">
@@ -126,7 +126,7 @@ export default class studentDashboard extends Component {
 
                         <div className="container bg-info rounded-4">
                             <br />
-                            <h4>Request Supervisor  Details</h4>
+                            <h4 style={{ color: "white" }}>Request Supervisor  Details</h4>
                             <hr />
 
                             <div className="p-3 mb-3 bg-primary text-dark rounded-3 "style={{ overflow: 'scroll' }}>
@@ -186,7 +186,7 @@ export default class studentDashboard extends Component {
 
                         <div className="container bg-info rounded-4">
                             <br />
-                            <h4>Request Co-Supervisor  Details</h4>
+                            <h4 style={{ color: "white" }}>Request Co-Supervisor  Details</h4>
                             <hr />
 
                             <div class="p-3 mb-3 bg-primary text-dark rounded-3" style={{ overflow: 'scroll' }} >

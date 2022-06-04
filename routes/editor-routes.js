@@ -6,7 +6,7 @@ const PresentationController = require('../controllers/presentation-controller')
 const WorkshopController = require('../controllers/workshop-controller');
 const RequestSupervisorController = require('../controllers/request-supervisor-controller');
 const RequestCoSupervisorController = require('../controllers/request-co-supervisor-controller');
-const DocumentUploaderController = require('../controllers/DocumentUploader-controller');
+// const DocumentUploaderController = require('../controllers/DocumentUploader-controller');
 
 
 router.post('/presentation', PresentationController.createPresentation);
@@ -18,7 +18,7 @@ router.post('/requestsupervisor', RequestSupervisorController.createRequestSuper
 router.get('/requestcosupervisor/', RequestCoSupervisorController.getSingleRequestCoSupervisor);
 router.post('/requestcosupervisor', RequestCoSupervisorController.createRequestCoSupervisor);
 router.put('/updaterequestcosupervisor/:id', RequestCoSupervisorController.updateRequestCoSupervisor);
-router.post('/uploaddocument', DocumentUploaderController.DocumentUploader);
+// router.post('/uploaddocument', DocumentUploaderController.AddDocumentUploader);
 
 
 

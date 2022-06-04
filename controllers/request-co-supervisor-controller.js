@@ -1,5 +1,5 @@
 const RequestCoSupervisor = require('../schemas/request-co-supervisor-schema')
-//const Conference = require('../schemas/conference-schema')
+
 
 const createRequestCoSupervisor = async (req, res) => {
   if (req.body) {
@@ -9,7 +9,7 @@ const createRequestCoSupervisor = async (req, res) => {
 
     try {
       const data = await requestCoSupervisor.save();
-      // await Conference.updateOne({ _id: conference }, { $addToSet: { workshop: workshop._id } }, (err, res) => { });
+
       res.status(200).send({ data: data });
     } catch (error) {
       console.error(error)
@@ -30,28 +30,6 @@ const getSingleRequestCoSupervisor = async (req, res) => {
     });
 }
 
-// const updateRequestCoSupervisor = async (req, res) => {
-//   console.log(req.body)
-//   if (!req.body) {
-//     return res.status(400).send({
-//       message: "Data to update can not be empty!"
-//     });
-//   }
-//   await RequestCoSupervisor.findByIdAndUpdate(req.params.id, req.body, { useFindAndModify: false })
-//     .then(data => {
-//       if (!data) {
-//         res.status(400).send({ message: 'cannot update conference' });
-//       } else {
-//         res.status(200).send({ data: data });
-//         console.log('updated', data)
-//       }
-
-//     })
-//     .catch(error => {
-//       res.status(500).send({ error: error.message });
-//     });
-
-// }
 
 
 const updateRequestCoSupervisor = async function (req, res) {

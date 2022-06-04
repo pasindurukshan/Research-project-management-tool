@@ -1,5 +1,5 @@
 const RequestSupervisor = require('../schemas/request-supervisor-schema')
-//const Conference = require('../schemas/conference-schema')
+
 
 const createRequestSupervisor = async (req, res) => {
     if (req.body) {
@@ -9,7 +9,7 @@ const createRequestSupervisor = async (req, res) => {
 
         try {
             const data = await requestSupervisor.save();
-           // await Conference.updateOne({ _id: conference }, { $addToSet: { workshop: workshop._id } }, (err, res) => { });
+        
             res.status(200).send({ data: data });
         } catch (error) {
             console.error(error)
