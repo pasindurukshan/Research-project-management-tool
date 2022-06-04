@@ -56,5 +56,5 @@
   "devDependencies": {
     "react-test-renderer": "^17.0.2"
   },
-  "proxy": "http://localhost:4000"
+  "proxy": "https://sliitportalmart.herokuapp.com/"
 }
