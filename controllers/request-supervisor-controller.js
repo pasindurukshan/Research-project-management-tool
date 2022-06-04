@@ -21,7 +21,7 @@ const createRequestSupervisor = async (req, res) => {
 
 
 const getSingleRequestSupervisor = async (req, res) => {
-    await RequestSupervisor.findById(req.params.id)
+    await RequestSupervisor.find({})
     .then(data => {
       res.status(200).send({ data: data });
     })
