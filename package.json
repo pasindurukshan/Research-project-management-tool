@@ -1,8 +1,8 @@
 {
   "name": "icaf",
   "version": "1.0.0",
-  "description": "REST API for ICAF web client",
-  "main": "index.js",
+  "description": "REST API for SLIIT web client",
+  "main": "server.js",
   "scripts": {
     "build": "cd client && npm run build",
     "install-client": "cd client && npm install",
