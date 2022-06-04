@@ -18,10 +18,8 @@
     "type": "git",
     "url": "git+https://github.com/rukshan99/api-ICAF.git"
   },
-  "author": "Rukshan, Sahan, Sachini, Navodya",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/rukshan99/api-ICAF/issues"
+  "author": "",
+  "license": "ISC"
   },
   "homepage": "https://github.com/rukshan99/api-ICAF#readme",
   "dependencies": {
