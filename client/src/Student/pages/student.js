@@ -1,19 +1,22 @@
 import React from 'react'
 
 const student = () => {
-  return(
-    <div className='container'>
-      
+  return (
+    <>
 
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      
 
-        <center><h1>student page</h1> </center>
-          
     
 
-      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-      </div>
+
+     
+        <h1>Button</h1>
+     
+        
+
+
+
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    </>
 
   )
 }

@@ -13,6 +13,7 @@ require('dotenv').config({path: __dirname + '/.env'})
   *  routes *
     *    here */
 const UserRoutes = require('./routes/user-routes');
+const EditorRoutes = require('./routes/editor-routes');
 
 
 
@@ -44,6 +45,7 @@ app.use(errorHandler);
 
 
 app.use('/api/v1/users/', UserRoutes);
+app.use('/api/v1/editor', EditorRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, './client/build')));
