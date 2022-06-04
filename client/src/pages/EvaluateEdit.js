@@ -25,7 +25,7 @@ export default class EditEvaluate extends Component {
       .get("http://localhost:4000/api/get/topic/" + this.props.match.params.id)
       .then((response) => {
         this.setState({
-          name: response.data.name,
+          topic: response.data.topic,
           reason: response.data.reason,
           status: response.data.status,
           date: response.data.date,
@@ -111,7 +111,7 @@ export default class EditEvaluate extends Component {
                       type="text"
                       placeholder="Name"
                       className="form-control"
-                      value={this.state.name}
+                      value={this.state.topic}
                       disabled
                     />
                   </div>{" "}

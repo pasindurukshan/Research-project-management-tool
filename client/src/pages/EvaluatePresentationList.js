@@ -13,9 +13,12 @@ const Presentation = (props) => (
     <td> {props.Presentation.date} </td>
   </tr>
 );
-const Test = (props) => (
+const Panel = (props) => (
   <tr>
-    <td> {props.Test.name} </td>
+    <td> {props.Panel.name} </td>
+    <td> {props.Panel.topic} </td>
+    <td> {props.Panel.date} </td>
+    <td> {props.Panel.grp} </td>
   </tr>
 );
 export default class EvaluatePresentationList extends Component {
@@ -24,7 +27,7 @@ export default class EvaluatePresentationList extends Component {
 
     this.state = {
       Presentation: [],
-      Test: [],
+      Panel: [],
     };
   }
 
@@ -39,9 +42,9 @@ export default class EvaluatePresentationList extends Component {
       });
 
     axios
-      .get("http://localhost:4000/api/gettest/tests/")
+      .get("http://localhost:4000/api/get/panelps/")
       .then((response) => {
-        this.setState({ Test: response.data });
+        this.setState({ Panel: response.data });
       })
       .catch((error) => {
         console.log(error);
@@ -59,13 +62,27 @@ export default class EvaluatePresentationList extends Component {
       });
 
     axios
-      .get("http://localhost:4000/api/gettest/tests/")
+      .get("http://localhost:4000/api/get/panelps/")
       .then((response) => {
-        this.setState({ Test: response.data });
+        this.setState({ Panel: response.data });
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  deletePanel(id) {
+    if (window.confirm("Are you sure?")) {
+      axios
+        .delete("http://localhost:4000/api/del/panelp/" + id)
+        .then((response) => {
+          console.log(response.data);
+        });
+
+      this.setState({
+        Panel: this.state.Panel.filter((el) => el._id !== id),
+      });
+    }
   }
 
   PresentationList() {
@@ -79,9 +96,9 @@ export default class EvaluatePresentationList extends Component {
     });
   }
 
-  TestList() {
-    return this.state.Test.map((currentTest) => {
-      return <Test Test={currentTest} key={currentTest._id} />;
+  PanelList() {
+    return this.state.Panel.map((currentPanel) => {
+      return <Panel Panel={currentPanel} key={currentPanel._id} />;
     });
   }
 
@@ -101,18 +118,21 @@ export default class EvaluatePresentationList extends Component {
         <table className="table table-bordered table-white">
           <thead className="thead-dark" style={{ fontWeight: "bold" }}>
             <tr>
+              <th>Panel Member </th>
               <th>Presentation Topic </th>
+              <th>Group </th>
+
               <th> Action </th>
-            </tr>{" "}
+            </tr>
           </thead>
           <tbody style={{ fontWeight: "bold" }}>
-            {" "}
-            {this.state.Test.map((props) => (
+            {this.state.Panel.map((props) => (
               <tr key={props.id}>
                 <td> {props.name} </td>
-
+                <td> {props.topic} </td>
+                <td> {props.grp} </td>
                 <td>
-                  <Link to={`/addEvaPre/${props.name}`}>
+                  <Link to={"/addEvaPre/" + props._id}>
                     <Button data-inline="true" variant="dark">
                       Evaluate
                     </Button>
@@ -138,21 +158,25 @@ export default class EvaluatePresentationList extends Component {
         <table className="table table-bordered table-white">
           <thead className="thead-dark" style={{ fontWeight: "bold" }}>
             <tr>
+              <th> Panel Member </th>
               <th>Presentation Topic </th>
+              <th> Group </th>
               <th> Step 1 </th>
               <th> Step 2 </th>
               <th> Step 3 </th>
               <th> Step 4 </th>
               <th> Total Marks </th>
-              <th> Date </th>
+              <th> Evaluated Date </th>
               <th> Action </th>
-            </tr>{" "}
+            </tr>
           </thead>
           <tbody style={{ fontWeight: "bold" }}>
-            {" "}
             {this.state.Presentation.map((props) => (
               <tr key={props.id}>
                 <td> {props.name} </td>
+                <td> {props.topic} </td>
+                <td> {props.grp} </td>
+
                 <td> {props.stp1} </td>
                 <td> {props.stp2} </td>
                 <td> {props.stp3} </td>

@@ -4,13 +4,23 @@ const Test = require("../schemas/test");
 const addTest = asyncHandler(async (req, res) => {
   console.log("Add a Test");
 
-  const { name } = req.body;
+  const { topic, grp } = req.body;
 
   const test = await Test.create({
-    name,
+    topic,
+    grp,
   });
 });
+const getTestById = asyncHandler(async (req, res) => {
+  const test = await Test.findById(req.params.id);
 
+  if (test) {
+    res.json(test);
+  } else {
+    res.status(404);
+    throw new Error("Presentation not found");
+  }
+});
 const getTest = asyncHandler(async (req, res) => {
   const tests = await Test.find({});
   res.json(tests);
@@ -31,3 +41,4 @@ const delTest = asyncHandler(async (req, res) => {
 exports.addTest = addTest;
 exports.getTest = getTest;
 exports.delTest = delTest;
+exports.getTestById = getTestById;

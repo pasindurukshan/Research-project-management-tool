@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 
 const evaluatePresentationSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  topic: { type: String, required: true },
+  grp: { type: String, required: true },
   stp1: { type: Number, required: true },
   stp2: { type: Number, required: true },
   stp3: { type: Number, required: true },

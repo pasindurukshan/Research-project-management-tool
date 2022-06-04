@@ -10,21 +10,19 @@ const Topic = (props) => (
     <td> {props.Topic.status} </td>
   </tr>
 );
-const Panel = (props) => (
+const Test = (props) => (
   <tr>
-    <td> {props.Panel.name} </td>
-    <td> {props.Panel.topic} </td>
-    <td> {props.Panel.date} </td>
-    <td> {props.Panel.grp} </td>
+    <td> {props.Test.name} </td>
   </tr>
 );
-export default class EvaluateTopicList extends Component {
+
+export default class EvaTopicList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       Topic: [],
-      Panel: [],
+      Test: [],
     };
   }
 
@@ -39,9 +37,9 @@ export default class EvaluateTopicList extends Component {
       });
 
     axios
-      .get("http://localhost:4000/api/get/panels/")
+      .get("http://localhost:4000/api/gettest/tests/")
       .then((response) => {
-        this.setState({ Panel: response.data });
+        this.setState({ Test: response.data });
       })
       .catch((error) => {
         console.log(error);
@@ -59,9 +57,9 @@ export default class EvaluateTopicList extends Component {
       });
 
     axios
-      .get("http://localhost:4000/api/get/panels/")
+      .get("http://localhost:4000/api/gettest/tests/")
       .then((response) => {
-        this.setState({ Panel: response.data });
+        this.setState({ Test: response.data });
       })
       .catch((error) => {
         console.log(error);
@@ -69,7 +67,7 @@ export default class EvaluateTopicList extends Component {
   }
 
   deleteEvaluate(id) {
-    if (window.confirm("Are you sure?")) {
+    if (window.confirm("Do you want to delete the record?")) {
       axios
         .delete("http://localhost:4000/api/del/topic/" + id)
         .then((response) => {
@@ -82,15 +80,29 @@ export default class EvaluateTopicList extends Component {
     }
   }
 
+  deleteTest(id) {
+    if (window.confirm("Do you want to delete the record?")) {
+      axios
+        .delete("http://localhost:4000/api/deltest/test/" + id)
+        .then((response) => {
+          console.log(response.data);
+        });
+
+      this.setState({
+        Test: this.state.Test.filter((el) => el._id !== id),
+      });
+    }
+  }
+
   TopicList() {
     return this.state.Topic.map((currentTopic) => {
       return <Topic Topic={currentTopic} key={currentTopic._id} />;
     });
   }
 
-  PanelList() {
-    return this.state.Panel.map((currentPanel) => {
-      return <Panel Panel={currentPanel} key={currentPanel._id} />;
+  TestList() {
+    return this.state.Test.map((currentTest) => {
+      return <Test Test={currentTest} key={currentTest._id} />;
     });
   }
 
@@ -103,32 +115,33 @@ export default class EvaluateTopicList extends Component {
             <h3> All Topics </h3>
           </div>
           <br></br>
-
           <br></br>
           <br></br>
         </div>
         <table className="table table-bordered table-white">
           <thead className="thead-dark" style={{ fontWeight: "bold" }}>
             <tr>
-              <th>Panel Member </th>
               <th>Topic </th>
-              <th>Group </th>
-
               <th> Action </th>
             </tr>
           </thead>
           <tbody style={{ fontWeight: "bold" }}>
-            {this.state.Panel.map((props) => (
+            {this.state.Test.map((props) => (
               <tr key={props.id}>
-                <td> {props.name} </td>
                 <td> {props.topic} </td>
-                <td> {props.grp} </td>
 
                 <td>
-                  <Link to={"/addEva/" + props._id}>
-                    <Button data-inline="true" variant="dark">
-                      Evaluate Topic
-                    </Button>
+                  <Link to={`/addEva/${props.name}`}>
+                    <a
+                      href=""
+                      onClick={() => {
+                        this.deleteTest(props._id);
+                      }}
+                    >
+                      <Button data-inline="true" variant="dark">
+                        Accept Topic
+                      </Button>
+                    </a>
                   </Link>
                 </td>
               </tr>
@@ -141,7 +154,7 @@ export default class EvaluateTopicList extends Component {
         <div></div> <br />
         <div className="row">
           <div className="col-9 mt-1 mb-1">
-            <h3> All Evaluated Topics </h3>
+            <h3> All Accepted Topics </h3>
           </div>
           <br></br>
 
@@ -151,35 +164,26 @@ export default class EvaluateTopicList extends Component {
         <table className="table table-bordered table-white">
           <thead className="thead-dark" style={{ fontWeight: "bold" }}>
             <tr>
-              <th> Panel Member </th>
               <th> Topic </th>
-              <th> Group </th>
               <th> Reason </th>
               <th> Status </th>
-              <th> Evaluated Date </th>
-              <th> State </th>
-
+              <th> Accepted Date </th>
               <th> Action </th>
             </tr>
           </thead>
           <tbody style={{ fontWeight: "bold" }}>
             {this.state.Topic.map((props) => (
               <tr key={props.id}>
-                <td> {props.name} </td>
                 <td> {props.topic} </td>
-                <td> {props.grp} </td>
                 <td> {props.reason} </td>
                 <td> {props.status} </td>
                 <td> {props.date} </td>
-                <td> {props.state} </td>
                 <td>
                   <Link to={"/editEva/" + props._id}>
                     <Button data-inline="true" variant="dark">
                       Update
                     </Button>
-                  </Link>
-                  <br />
-                  <br />
+                  </Link>{" "}
                   <a
                     href=""
                     onClick={() => {

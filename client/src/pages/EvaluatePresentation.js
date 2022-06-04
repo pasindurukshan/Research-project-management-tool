@@ -6,22 +6,14 @@ import swal from "@sweetalert/with-react";
 
 import "./main.css";
 
-const Test = (props) => (
-  <tr>
-    <td> {props.Test.name} </td>
-  </tr>
-);
-
 export default class AddEvaluatePresentation extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeName = this.onChangeName.bind(this);
     this.onChangeSts1 = this.onChangeSts1.bind(this);
     this.onChangeSts2 = this.onChangeSts2.bind(this);
     this.onChangeSts3 = this.onChangeSts3.bind(this);
     this.onChangeSts4 = this.onChangeSts4.bind(this);
-    this.onChangeTotal = this.onChangeTotal.bind(this);
 
     this.onChangeDate = this.onChangeDate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -34,32 +26,37 @@ export default class AddEvaluatePresentation extends Component {
       stp4: "",
       total: "",
       date: "",
+      Panel: [],
     };
   }
 
   componentDidMount() {
     axios
-      .get("http://localhost:4000/api/gettest/test/")
+      .get("http://localhost:4000/api/get/panelp/" + this.props.match.params.id)
       .then((response) => {
         this.setState({
           name: response.data.name,
+          topic: response.data.topic,
+          grp: response.data.grp,
         });
       })
       .catch(function (error) {
         console.log(error);
       });
+    axios
+      .get("http://localhost:4000/api/get/panelp")
+      .then((response) => {
+        if (response.data.length > 0) {
+          this.setState({
+            Delivery: response.data.map((Panel) => Panel.DPname),
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
-  TestList() {
-    return this.state.Test.map((currentTest) => {
-      return <Test Test={currentTest} key={currentTest._id} />;
-    });
-  }
-  onChangeName(e) {
-    this.setState({
-      name: e.target.value,
-    });
-  }
   onChangeSts1(e) {
     this.setState({
       stp1: e.target.value,
@@ -80,20 +77,10 @@ export default class AddEvaluatePresentation extends Component {
       stp4: e.target.value,
     });
   }
-  onChangeTotal(e) {
-    this.setState({
-      stp4: e.target.value,
-    });
-  }
 
   onChangeDate(e) {
     this.setState({
       date: e.target.value,
-    });
-  }
-  onChangeTotal(e) {
-    this.setState({
-      total: e.target.value,
     });
   }
 
@@ -101,7 +88,9 @@ export default class AddEvaluatePresentation extends Component {
     e.preventDefault();
 
     const Presentation = {
-      name: this.props.match.params.name,
+      name: this.state.name,
+      topic: this.state.topic,
+      grp: this.state.grp,
       stp1: this.state.stp1,
       stp2: this.state.stp2,
       stp3: this.state.stp3,
@@ -130,8 +119,6 @@ export default class AddEvaluatePresentation extends Component {
   }
 
   render() {
-    const Name = this.props.match.params.name;
-    console.log(Name);
     return (
       <div>
         <div className="row">
@@ -154,10 +141,10 @@ export default class AddEvaluatePresentation extends Component {
                       placeholder="Name"
                       required
                       className="form-control"
-                      value={Name}
+                      value={this.state.topic}
                       disabled
                     />
-                  </div>{" "}
+                  </div>
                   <div className="form-group">
                     <label style={{ fontWeight: "bold" }}> Step 1 </label>
                     <br />
@@ -171,7 +158,7 @@ export default class AddEvaluatePresentation extends Component {
                       <option value="20">20</option>
                       <option value="30">30</option>
                     </select>
-                  </div>{" "}
+                  </div>
                   <div className="form-group">
                     <label style={{ fontWeight: "bold" }}> Step 2 </label>
                     <br />

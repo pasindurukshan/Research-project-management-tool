@@ -6,18 +6,21 @@ import swal from "@sweetalert/with-react";
 
 import "./main.css";
 
-export default class AddEvaluate extends Component {
+export default class AddPanel extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeReason = this.onChangeReason.bind(this);
-    this.onChangeStatus = this.onChangeStatus.bind(this);
+    this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeTopic = this.onChangeTopic.bind(this);
+
+    this.onChangeGrp = this.onChangeGrp.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      reason: "",
-      status: "",
+      name: "",
+      topic: "",
+      grp: "",
       date: "",
       Panel: [],
     };
@@ -25,10 +28,9 @@ export default class AddEvaluate extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:4000/api/get/panel/" + this.props.match.params.id)
+      .get("http://localhost:4000/api/get/test/" + this.props.match.params.id)
       .then((response) => {
         this.setState({
-          name: response.data.name,
           topic: response.data.topic,
           grp: response.data.grp,
         });
@@ -36,28 +38,21 @@ export default class AddEvaluate extends Component {
       .catch(function (error) {
         console.log(error);
       });
-    axios
-      .get("http://localhost:4000/api/get/panel")
-      .then((response) => {
-        if (response.data.length > 0) {
-          this.setState({
-            Delivery: response.data.map((Panel) => Panel.DPname),
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }
-
-  onChangeReason(e) {
+  onChangeName(e) {
     this.setState({
-      reason: e.target.value,
+      name: e.target.value,
     });
   }
-  onChangeStatus(e) {
+  onChangeTopic(e) {
     this.setState({
-      status: e.target.value,
+      topic: e.target.value,
+    });
+  }
+
+  onChangeGrp(e) {
+    this.setState({
+      grp: e.target.value,
     });
   }
   onChangeDate(e) {
@@ -69,19 +64,16 @@ export default class AddEvaluate extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const Topic = {
+    const Panel = {
       name: this.state.name,
       topic: this.state.topic,
       grp: this.state.grp,
-      reason: this.state.reason,
-      status: this.state.status,
       date: this.state.date,
-      state: "Accepted",
     };
-    console.log(Topic);
+    console.log(Panel);
 
     axios
-      .post("http://localhost:4000/api/add/topic/", Topic)
+      .post("http://localhost:4000/api/add/panel/", Panel)
       .then((res) => console.log(res.data));
 
     swal({
@@ -90,7 +82,7 @@ export default class AddEvaluate extends Component {
       icon: "success",
       button: "Okay!",
     }).then((value) => {
-      swal((window.location = "/evaList/"));
+      swal((window.location = "/panelList/"));
     });
   }
 
@@ -103,48 +95,52 @@ export default class AddEvaluate extends Component {
               <div className="card-body">
                 <div className="col-md-8 mt-4 mx-auto"> </div>
                 <h3 className="text-center">
-                  <font size="6">Evaluate</font>
+                  <font size="6">Add Panel Member To Panel</font>
                 </h3>
                 <br></br>
                 <br></br>
                 <form className="col-lg-6 offset-lg-3" onSubmit={this.onSubmit}>
                   <div className="form-group">
-                    <label style={{ fontWeight: "bold" }}>Topic </label>
+                    <label style={{ fontWeight: "bold" }}>
+                      Add Panel Member
+                    </label>
                     <input
                       type="text"
-                      placeholder="Name"
+                      placeholder="Panel Member"
+                      required
+                      className="form-control"
+                      value={this.state.name}
+                      onChange={this.onChangeName}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label style={{ fontWeight: "bold" }}>Add Topic</label>
+                    <input
+                      type="text"
+                      placeholder="Topic"
                       required
                       className="form-control"
                       value={this.state.topic}
+                      onChange={this.onChangeTopic}
+                      disabled
                     />
                   </div>
+
                   <div className="form-group">
-                    <label style={{ fontWeight: "bold" }}> Reason </label>
+                    <label style={{ fontWeight: "bold" }}>Select Group</label>
                     <input
                       type="text"
-                      placeholder="Reason"
+                      placeholder="Group"
                       required
                       className="form-control"
-                      onChange={this.onChangeReason}
+                      value={this.state.grp}
+                      onChange={this.onChangeGrp}
+                      disabled
                     />
                   </div>
+
                   <div className="form-group">
-                    <label style={{ fontWeight: "bold" }}> Status </label>
-                    <br />
-                    <select
-                      class="form-select"
-                      style={{ width: "200px", height: "40px" }}
-                      onChange={this.onChangeStatus}
-                    >
-                      <option selected>Add Status</option>
-                      <option value="Poor">Poor</option>
-                      <option value="Fair">Fair</option>
-                      <option value="Good">Good</option>
-                      <option value="Excellent ">Excellent</option>
-                    </select>
-                  </div>
-                  <div className="form-group">
-                    <label style={{ fontWeight: "bold" }}>Evaluated Date</label>
+                    <label style={{ fontWeight: "bold" }}>Date</label>
 
                     <input
                       type="date"

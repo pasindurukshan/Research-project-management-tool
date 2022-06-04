@@ -19,6 +19,7 @@ export default class EditEvaluatePresentation extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
+      total: "",
       Presentation: [],
     };
   }
@@ -92,6 +93,11 @@ export default class EditEvaluatePresentation extends Component {
       stp2: this.state.stp2,
       stp3: this.state.stp3,
       stp4: this.state.stp4,
+      total:
+        this.state.stp1 * 1 +
+        this.state.stp2 * 1 +
+        this.state.stp3 * 1 +
+        this.state.stp4 * 1,
       date: this.state.date,
     };
     console.log(Presentation);
@@ -131,7 +137,7 @@ export default class EditEvaluatePresentation extends Component {
                 <form className="col-lg-6 offset-lg-3" onSubmit={this.onSubmit}>
                   <div className="form-group">
                     <label style={{ fontWeight: "bold" }}>
-                      Presentation Topic{" "}
+                      Presentation Topic
                     </label>
                     <input
                       type="text"
@@ -141,7 +147,7 @@ export default class EditEvaluatePresentation extends Component {
                       value={this.state.name}
                       disabled
                     />
-                  </div>{" "}
+                  </div>
                   <div className="form-group">
                     <label style={{ fontWeight: "bold" }}> Step 1 </label>
                     <br />
@@ -152,9 +158,9 @@ export default class EditEvaluatePresentation extends Component {
                       value={this.state.stp1}
                     >
                       <option selected>Add Marks</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
+                      <option value="10">10</option>
+                      <option value="20">20</option>
+                      <option value="30">30</option>
                     </select>
                   </div>{" "}
                   <div className="form-group">
@@ -167,11 +173,11 @@ export default class EditEvaluatePresentation extends Component {
                       value={this.state.stp2}
                     >
                       <option selected>Add Marks</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
+                      <option value="10">10</option>
+                      <option value="20">20</option>
+                      <option value="30">30</option>
                     </select>
-                  </div>{" "}
+                  </div>
                   <div className="form-group">
                     <label style={{ fontWeight: "bold" }}> Step 3 </label>
                     <br />
@@ -182,9 +188,9 @@ export default class EditEvaluatePresentation extends Component {
                       value={this.state.stp3}
                     >
                       <option selected>Add Marks</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
+                      <option value="10">10</option>
+                      <option value="20">20</option>
+                      <option value="30">30</option>
                     </select>
                   </div>
                   <div className="form-group">
@@ -197,11 +203,11 @@ export default class EditEvaluatePresentation extends Component {
                       value={this.state.stp4}
                     >
                       <option selected>Add Marks</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
+                      <option value="10">10</option>
+                      <option value="20">20</option>
+                      <option value="30">30</option>
                     </select>
-                  </div>{" "}
+                  </div>
                   <div className="form-group">
                     <label style={{ fontWeight: "bold" }}>Evaluate Date </label>
 
@@ -219,6 +225,7 @@ export default class EditEvaluatePresentation extends Component {
                       type="submit"
                       value="Add "
                       className="btn btn-primary"
+                      onChange={this.onChangeTotal}
                     />
                   </div>
                 </form>

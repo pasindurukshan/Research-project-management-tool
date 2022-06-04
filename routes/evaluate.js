@@ -16,7 +16,12 @@ const {
   getEvaluatePresentationById,
 } = require("../controllers/evaluatePresentation.js");
 
-const { addTest, getTest, delTest } = require("../controllers/test.js");
+const {
+  addTest,
+  getTest,
+  delTest,
+  getTestById,
+} = require("../controllers/test.js");
 
 router.route("/topic").post(evaluateTopic);
 router.route("/topics").get(getEvaluateTopics);
@@ -32,5 +37,5 @@ router.route("/presentation/:id").put(updateEvaluatePresentation);
 router.route("/test").post(addTest);
 router.route("/tests").get(getTest);
 router.route("/test/:id").delete(delTest);
-
+router.route("/test/:id").get(getTestById);
 module.exports = router;

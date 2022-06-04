@@ -4,10 +4,12 @@ const Presentation = require("../schemas/evaluatePresentation");
 const evaluatePresentation = asyncHandler(async (req, res) => {
   console.log("Add a Evaluate");
 
-  const { name, stp1, stp3, stp2, stp4, total, date } = req.body;
+  const { name, topic, grp, stp1, stp3, stp2, stp4, total, date } = req.body;
 
   const presentation = await Presentation.create({
     name,
+    topic,
+    grp,
     stp1,
     stp2,
     stp3,

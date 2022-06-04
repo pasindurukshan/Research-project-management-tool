@@ -4,13 +4,16 @@ const Topic = require("../schemas/evaluateTopic");
 const evaluateTopic = asyncHandler(async (req, res) => {
   console.log("Add a Evaluate");
 
-  const { name, reason, date, status } = req.body;
+  const { name, topic, grp, reason, date, status, state } = req.body;
 
-  const topic = await Topic.create({
+  const topix = await Topic.create({
     name,
+    topic,
+    grp,
     reason,
     date,
     status,
+    state,
   });
 });
 

@@ -13,8 +13,19 @@ const GetEvaluatePresentationRoutes = require("./routes/evaluate.js");
 const GetEvaluatePresentationByIdRoutes = require("./routes/evaluate.js");
 const UpdateEvaluatePresentationRoutes = require("./routes/evaluate.js");
 
+const AddPanelRoutes = require("./routes/panel.js");
+const GetPanelRoutes = require("./routes/panel.js");
+const DeletePanelRoutes = require("./routes/panel.js");
+const GetPanelById = require("./routes/panel.js");
+
+const AddPPanelRoutes = require("./routes/panel.js");
+const GetPPanelRoutes = require("./routes/panel.js");
+const DeletePPanelRoutes = require("./routes/panel.js");
+const GetPPanelById = require("./routes/panel.js");
+
 const AddTestRoutes = require("./routes/evaluate.js");
 const GetTestsRoutes = require("./routes/evaluate.js");
+const GetTestsByIDRoutes = require("./routes/evaluate.js");
 const DelTestsRoutes = require("./routes/evaluate.js");
 
 const app = express();
@@ -26,6 +37,7 @@ app.use(express.static("public")); //This lines means the static data like css, 
 
 app.use(express.json());
 app.use("/api/add", EvaluateTopicRoutes);
+
 app.use("/api/get", GetEvaluateTopicsRoutes);
 app.use("/api/get", GetEvaluateTopicByIdRoutes);
 app.use("/api/put", UpdateEvaluateTopic);
@@ -35,8 +47,19 @@ app.use("/api/get", GetEvaluatePresentationRoutes);
 app.use("/api/get", GetEvaluatePresentationByIdRoutes);
 app.use("/api/put", UpdateEvaluatePresentationRoutes);
 
+app.use("/api/add", AddPanelRoutes);
+app.use("/api/get", GetPanelRoutes);
+app.use("/api/del", DeletePanelRoutes);
+app.use("/api/get", GetPanelById);
+
+app.use("/api/add", AddPPanelRoutes);
+app.use("/api/get", GetPPanelRoutes);
+app.use("/api/del", DeletePPanelRoutes);
+app.use("/api/get", GetPPanelById);
+
 app.use("/api/addtest", AddTestRoutes);
 app.use("/api/gettest", GetTestsRoutes);
+app.use("/api/gettest", GetTestsByIDRoutes);
 app.use("/api/deltest", DelTestsRoutes);
 
 const connectionString = process.env["MONGO_DB"];
