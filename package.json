@@ -1,29 +1,22 @@
 {
-  "name": "icaf",
+  "name": "sliit",
   "version": "1.0.0",
-  "description": "REST API for ICAF web client",
-  "main": "index.js",
+  "description": "REST API for SLIIT web client",
+  "main": "server.js",
   "scripts": {
-    "build": "cd client && npm run build",
-    "install-client": "cd client && npm install",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
-    "server": "nodemon server.js",
-    "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
-    "start": "node server.js"
+    "start": "node server.js",   
+    "server": "nodemon server.js", 
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "node seeder",
+    "data:destroy": "node seeder -d",    
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "jest": {
     "testEnvironment": "node"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rukshan99/api-ICAF.git"
-  },
-  "author": "Rukshan, Sahan, Sachini, Navodya",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/rukshan99/api-ICAF/issues"
-  },
-  "homepage": "https://github.com/rukshan99/api-ICAF#readme",
+  "author": "Fernando, Hewage, Bandara, Wijerathna",
+  "license": "SLIIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -41,6 +34,7 @@
     "uuidv4": "^6.2.8"
   },
   "devDependencies": {
+    "concurrently": "^5.3.0",
     "nodemon": "^2.0.7"
   }
 }
