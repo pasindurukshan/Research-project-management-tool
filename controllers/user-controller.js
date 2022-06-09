@@ -82,7 +82,7 @@ const saveUser = async (req, res, next) => {
         await session.commitTransaction();
     } catch (err) {
         const error = new HttpError(
-            'Error occured while saving details. Please try again.',
+            'Error occured while saving details. Please try again..',
             500
         );
         return next(error);
