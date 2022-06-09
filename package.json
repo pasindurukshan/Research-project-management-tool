@@ -31,6 +31,7 @@
     "nodemailer": "^6.6.2",
     "nodemailer-express-handlebars": "^4.0.0",
     "path": "^0.12.7",
+    "morgan": "^1.10.0",
     "uuidv4": "^6.2.8"
   },
   "devDependencies": {
